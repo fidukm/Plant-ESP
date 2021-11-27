@@ -1,15 +1,8 @@
--- Clears database if it already exists
-DROP DATABASE IF EXISTS soil_esp;
-
--- Creating Database
-CREATE DATABASE IF NOT EXISTS soil_esp;
-USE soil_esp;
-
 -- Creating Tables
 -- Table - esp8266
 -- Stores infomration about a given esp module. 
-CREATE TABLE IF NOT EXISTS esp8266 (
-	esp_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE esp8266 (
+    esp_id INT NOT NULL IDENTITY(1,1),
     esp_name VARCHAR(128) NOT NULL,
     description VARCHAR(256),
     CONSTRAINT pk_esp8266 PRIMARY KEY (esp_id)
@@ -18,8 +11,8 @@ CREATE TABLE IF NOT EXISTS esp8266 (
 -- Table - sensor_type
 -- Stores information about a type of sensor 
 -- Ex: type_name: "Soil Moisture" description: "Measures the moisture level in the soil"
-CREATE TABLE IF NOT EXISTS sensor_type (
-	sensor_type_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE sensor_type (
+    sensor_type_id INT NOT NULL IDENTITY(1,1),
     type_name varchar(128) NOT NULL,
     description VARCHAR(256),
     CONSTRAINT pk_sensor_type PRIMARY KEY (sensor_type_id)
@@ -27,8 +20,8 @@ CREATE TABLE IF NOT EXISTS sensor_type (
 
 -- Table - sensor
 -- Stores information about a single sensor
-CREATE TABLE IF NOT EXISTS sensor (
-	sensor_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE sensor (
+    sensor_id INT NOT NULL IDENTITY(1,1),
     esp_id INT NOT NULL,
     sensor_type_id INT NOT NULL,
     CONSTRAINT pk_sensor PRIMARY KEY (sensor_id),
@@ -38,10 +31,10 @@ CREATE TABLE IF NOT EXISTS sensor (
 
 -- Table - sensor_reading
 -- Stores one reading for a sensor
-CREATE TABLE IF NOT EXISTS sensor_reading (
-	sensor_reading_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE sensor_reading (
+    sensor_reading_id INT NOT NULL IDENTITY(1,1),
     sensor_id INT NOT NULL,
-    reading_time TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    reading_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     reading FLOAT NOT NULL,
     CONSTRAINT pk_sensor_reading PRIMARY KEY (sensor_reading_id),
     CONSTRAINT fk_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
@@ -49,8 +42,8 @@ CREATE TABLE IF NOT EXISTS sensor_reading (
 
 -- Table - hourly_reading
 -- Stores that average reading over a given hour for a given sensor
-CREATE TABLE IF NOT EXISTS hourly_reading (
-	hourly_reading_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE hourly_reading (
+    hourly_reading_id INT NOT NULL IDENTITY(1,1),
     sensor_id INT NOT NULL,
     reading_date DATE NOT NULL,
     reading_hour INT NOT NULL,
@@ -61,8 +54,8 @@ CREATE TABLE IF NOT EXISTS hourly_reading (
 
 -- Table - daily_reading
 -- Stores the average reading over a given day for a given sensor
-CREATE TABLE IF NOT EXISTS daily_reading (
-	daily_reading_id INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE daily_reading (
+    daily_reading_id INT NOT NULL IDENTITY(1,1),
     sensor_id INT NOT NULL,
     reading_date DATE NOT NULL,
     average_reading FLOAT,
