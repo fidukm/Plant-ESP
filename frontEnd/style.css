@@ -1,0 +1,130 @@
+.mainBody {
+    background-image: url(beets.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.header {
+    text-align: center;
+    color: white;
+}
+
+.welcomeText {
+    text-align: center;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    
+}
+
+
+.outerBox {
+    position: relative;
+    width: 400px;
+    height: 450px;
+    border-radius: 15%;
+    opacity: 90%;
+    margin: 0 auto;
+    margin-top: 50px;
+    text-align: center;
+    background-image: url(timber.jpg);
+
+}
+
+.sensorButton {
+    position: relative;
+    width: 200px;
+    height: 75px;
+    margin: 0 auto;
+    margin-top: 55px;  
+    opacity: 80%;
+}
+div button:hover {
+    background: #83B315; 
+}.navText{
+    color: white;
+    text-decoration: none;
+}
+.navText:hover{
+    color: yellow;
+}
+
+/*-----------------------End of main page----------------------------*/ 
+
+
+.devices {
+    height: 500px;
+    width:200px;
+    border-style: solid;
+    border-color: darkgrey;
+    text-align:left;
+    background-color: #4C3609;
+
+}
+.label {
+    height: 25px;
+    width: 100%;
+    border-color: darkgrey;
+    border-bottom-style: solid;
+    background-color: #443008;
+}
+.devices li {
+   list-style: none;
+   font-size: small;
+}
+
+/* three box data display */
+.dataSpace {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    height: 600px;
+    width: 75vw;
+    border-style: solid;
+    border-color: darkgrey;
+    display: flex;
+    flex-direction: column;
+
+}
+
+.upperSpace{
+    width: 100%;
+    height: 50% ;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.sensorSettings {
+    border-right-style: solid;
+    border-color:darkgrey;
+    height: 100%;
+    width: 620px;
+    background-color: #4C3609;
+}
+
+.weekly {
+    height: 100%;
+    width: 400px;
+    right: 0px;
+
+}
+.weeklyTitle{
+    background-color: #4C3609;
+}
+
+.hourly {
+    width: 100%;
+    height: 50%;
+    border-top-style: solid;
+    border-color: darkgrey;
+}
+.hourlyTitle {
+    background-color: #4C3609;
+}
+/*end of three box display */
+
+.tempBody, .moistureBody {
+    background-color: #352606;
+    color: white;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
