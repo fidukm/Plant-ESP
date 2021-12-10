@@ -1,9 +1,10 @@
 <?php
-    $serverName = "fall2021iot.database.windows.net";
+    $DatabaseAccess = parse_ini_file('database.ini');
+    $serverName = $DatabaseAccess['serverName'];
     $connectionOptions = array (
-        "database" => "NonProductionESPTelemetry",
-        "uid" => "Replace With Username",
-        "pwd" => "Replace With Password"
+        "database" => $DatabaseAccess['database'],
+        "uid" => $DatabaseAccess['uid'],
+        "pwd" => $DatabaseAccess['pwd']
     );
 
     $conn = sqlsrv_connect($serverName, $connectionOptions);

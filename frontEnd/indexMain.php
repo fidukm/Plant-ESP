@@ -14,12 +14,13 @@
         <div class="outerBox" id="obox">
 
             <?php
-				$serverName = "fall2021iot.database.windows.net";
-				$connectionOptions = array (
-					"database" => "NonProductionESPTelemetry",
-					"uid" => "Replace With User",
-					"pwd" => "Replace With Password!"
-				);
+				$DatabaseAccess = parse_ini_file('database.ini');
+                $serverName = $DatabaseAccess['serverName'];
+                $connectionOptions = array (
+                    "database" => $DatabaseAccess['database'],
+                    "uid" => $DatabaseAccess['uid'],
+                    "pwd" => $DatabaseAccess['pwd']
+                );
 			
 				$conn = sqlsrv_connect($serverName, $connectionOptions);
 				if ($conn === false) {
@@ -34,7 +35,7 @@
 				# Loop through all results one row at a time
 				while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
 				{
-					echo "<a href='indexSensor.html?esp=".$_GET["esp"]."&sensor=".$result["sensor_id"]."'><button>".$result["sensor_type"]."</button></a>";
+					echo "<a href='indexSensor.html?esp=".$_GET["esp"]."&sensor=".$result["sensor_id"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
 
 				}
 			
