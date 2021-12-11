@@ -40,16 +40,19 @@ CREATE TABLE sensor_reading (
     CONSTRAINT fk_sensor FOREIGN KEY (sensor_id) REFERENCES sensor(sensor_id)
 );
 
+GO;
+
 -- Creating Views
 -- View - hourly_reading
 -- Stores that average reading over a given hour for a given sensor
 CREATE VIEW hourly_reading AS
-    SELECT sensor_id,
-        CONVERT(date, reading_time) AS reading_date,
-        DATEPART(hh, reading_time) AS reading_hour,
-        AVG(reading) AS avg_reading
-    FROM sensor_reading
-    GROUP BY CONVERT(date, reading_time), DATEPART(hh, reading_time), sensor_id;
+	SELECT 
+		sensor_id,
+    		cast(cast(reading_time as date) as datetime)+cast(datepart(hour,reading_time) as float)/24 AS reading_time,
+    		AVG(reading) AS avg_reading
+	FROM sensor_reading
+	GROUP BY cast(cast(reading_time as date) as datetime)+cast(datepart(hour,reading_time) as float)/24, sensor_id;
+GO;
 
 -- View - daily_reading
 -- Calculates the average reading over a given day for a sensor
