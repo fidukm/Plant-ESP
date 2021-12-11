@@ -44,7 +44,9 @@
 			?>
         </div> 
         
-        <p class="navText" id="settings">settings</p>
+        <form action="downloadcsv.php" method="post">
+            <input type="submit" value="Export Data">
+        </form>
 
     </body>
 
