@@ -2,8 +2,7 @@
 -- Table - esp8266
 -- Stores infomration about a given esp module. 
 CREATE TABLE esp8266 (
-    esp_id INT NOT NULL IDENTITY(1,1),
-    esp_name VARCHAR(128) NOT NULL,
+    esp_id VARCHAR(128) NOT NULL,
     description VARCHAR(256),
     CONSTRAINT pk_esp8266 PRIMARY KEY (esp_id)
 );
@@ -22,7 +21,7 @@ CREATE TABLE sensor_type (
 -- Stores information about a single sensor
 CREATE TABLE sensor (
     sensor_id INT NOT NULL IDENTITY(1,1),
-    esp_id INT NOT NULL,
+    esp_id VARCHAR(128) NOT NULL,
     sensor_type_id INT NOT NULL,
     CONSTRAINT pk_sensor PRIMARY KEY (sensor_id),
     CONSTRAINT fk_esp8266 FOREIGN KEY (esp_id) REFERENCES esp8266(esp_id),
