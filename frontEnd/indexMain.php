@@ -14,34 +14,40 @@
         <div class="outerBox" id="obox">
 
             <?php
-				$DatabaseAccess = parse_ini_file('database.ini');
-                $serverName = $DatabaseAccess['serverName'];
-                $connectionOptions = array (
-                    "database" => $DatabaseAccess['database'],
-                    "uid" => $DatabaseAccess['uid'],
-                    "pwd" => $DatabaseAccess['pwd']
-                );
+                if (isset($_GET["esp"]))
+                {
+				    $DatabaseAccess = parse_ini_file('database.ini');
+                    $serverName = $DatabaseAccess['serverName'];
+                    $connectionOptions = array (
+                        "database" => $DatabaseAccess['database'],
+                        "uid" => $DatabaseAccess['uid'],
+                        "pwd" => $DatabaseAccess['pwd']
+                    );
 			
-				$conn = sqlsrv_connect($serverName, $connectionOptions);
-				if ($conn === false) {
-					echo "Could not connect.\n";
-					die(print_r(sqlsrv_errors(), true));
-				}
+				    $conn = sqlsrv_connect($serverName, $connectionOptions);
+				    if ($conn === false) {
+				    	echo "Could not connect.\n";
+					    die(print_r(sqlsrv_errors(), true));
+				    }
 			
-				/* Set up and execute the query. */
-				$sql = "SELECT * FROM sensor WHERE esp_id = '".$_GET["esp"]."';";
-				$stmt = sqlsrv_query($conn, $sql);
+				    /* Set up and execute the query. */
+				    $sql = "SELECT * FROM sensor WHERE esp_id = '".$_GET["esp"]."';";
+				    $stmt = sqlsrv_query($conn, $sql);
 
-				# Loop through all results one row at a time
-				while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
-				{
-					echo "<a href='indexSensor.html?esp=".$_GET["esp"]."&sensor=".$result["sensor_id"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
+				    # Loop through all results one row at a time
+				    while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
+				    {
+					    echo "<a href='indexSensor.html?esp=".$_GET["esp"]."&sensor=".$result["sensor_id"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
 
-				}
+				    }
 			
-				sqlsrv_free_stmt($stmt);
-				sqlsrv_close($conn);
-			
+				    sqlsrv_free_stmt($stmt);
+				    sqlsrv_close($conn);
+                }
+                else
+                {
+                    header("Location: /indexESP.php");
+                }
 			?>
 
         </div> 
