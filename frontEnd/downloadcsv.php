@@ -14,7 +14,11 @@
     }
 
     /* Set up and execute the query. */
-    $sql = "SELECT * FROM sensor_reading;";
+    $sql = "SELECT e.esp_id, t.sensor_type, s.sensor_id, r.reading_time, r.reading 
+        FROM sensor_reading r 
+        JOIN sensor s on r.sensor_id = s.sensor_id 
+        JOIN sensor_type t on s.sensor_type = t.sensor_type 
+        JOIN esp8266 e on e.esp_id = s.esp_id;";
     $stmt = sqlsrv_query($conn, $sql);
 
     # Create CSV to download
@@ -22,10 +26,11 @@
     header("Content-Disposition: attachment; filename=testcsv.csv");
 
     # Write all readings to csv
-    echo "sensor_reading_id,sensor_id,reading_time,reading\n";
+    echo "esp_id,sensor_type,sensor_id,reading_time,reading\n";
     while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
     {
-        print_r($result["sensor_reading_id"].",".$result["sensor_id"].","
+        print_r($result["esp_id"].",".$result["sensor_type"].","
+            .$result["sensor_id"].","
             .$result["reading_time"]->format('Y-m-d H:i:s')
             .",".$result["reading"].",\n");
     }
