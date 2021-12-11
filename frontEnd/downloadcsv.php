@@ -23,7 +23,7 @@
 
     # Create CSV to download
     header("Content-type: text/x-csv");
-    header("Content-Disposition: attachment; filename=testcsv.csv");
+    header("Content-Disposition: attachment; filename=SensorReadings.csv");
 
     # Write all readings to csv
     echo "esp_id,sensor_type,sensor_id,reading_time,reading\n";
