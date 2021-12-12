@@ -35,7 +35,11 @@
 				# Loop through all results one row at a time
 				while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
 				{
-					echo "<a href='indexMain.php?esp=".$result["esp_id"]."'><button class='sensorButton'>".$result["esp_id"]."<br>".$result["description"]."</button></a>";
+					echo "<form action='indexMain.php' method='post'>
+							<button type='submit' class='sensorButton' name='esp' value='"
+								.$result["esp_id"]."'>".$result["esp_id"]."<br>".$result["description"].
+							"</button>
+						</form>";
 				}
 			
 				sqlsrv_free_stmt($stmt);

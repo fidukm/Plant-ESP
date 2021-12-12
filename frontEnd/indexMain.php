@@ -14,40 +14,48 @@
         <div class="outerBox" id="obox">
 
             <?php
-                if (isset($_GET["esp"]))
+                if (isset($_POST["esp"]))
                 {
-				    $DatabaseAccess = parse_ini_file('database.ini');
-                    $serverName = $DatabaseAccess['serverName'];
-                    $connectionOptions = array (
-                        "database" => $DatabaseAccess['database'],
-                        "uid" => $DatabaseAccess['uid'],
-                        "pwd" => $DatabaseAccess['pwd']
-                    );
-			
-				    $conn = sqlsrv_connect($serverName, $connectionOptions);
-				    if ($conn === false) {
-				    	echo "Could not connect.\n";
-					    die(print_r(sqlsrv_errors(), true));
-				    }
-			
-				    /* Set up and execute the query. */
-				    $sql = "SELECT * FROM sensor WHERE esp_id = '".$_GET["esp"]."';";
-				    $stmt = sqlsrv_query($conn, $sql);
-
-				    # Loop through all results one row at a time
-				    while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
-				    {
-					    echo "<a href='sensorChart.php?esp=".$_GET["esp"]."&sensor_id=".$result["sensor_id"]."&sensor=".$result["sensor_type"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
-
-				    }
-			
-				    sqlsrv_free_stmt($stmt);
-				    sqlsrv_close($conn);
+                    $esp = $_POST["esp"];
                 }
                 else
                 {
-                    header("Location: ./indexESP.php");
+                    $esp = "GardenSensorTest1";
                 }
+
+                $DatabaseAccess = parse_ini_file('database.ini');
+                $serverName = $DatabaseAccess['serverName'];
+                $connectionOptions = array (
+                    "database" => $DatabaseAccess['database'],
+                    "uid" => $DatabaseAccess['uid'],
+                    "pwd" => $DatabaseAccess['pwd']
+                );
+        
+                $conn = sqlsrv_connect($serverName, $connectionOptions);
+                if ($conn === false) {
+                    echo "Could not connect.\n";
+                    die(print_r(sqlsrv_errors(), true));
+                }
+        
+                /* Set up and execute the query. */
+                $sql = "SELECT * FROM sensor WHERE esp_id = '".$esp."';";
+                $stmt = sqlsrv_query($conn, $sql);
+
+                # Loop through all results one row at a time
+                while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
+                {
+                    echo "<form action='sensorChart.php' method='post'>
+                            <button type='submit' class='sensorButton' name='sensor_id' value=".$result["sensor_id"].">"
+                                .$result["sensor_type"].
+                            "</button>
+                            <input type='hidden' name='esp' value=".$esp.">
+                            <input type='hidden' name='sensor' value=".$result["sensor_type"].">
+                        </form>";
+                }
+        
+                sqlsrv_free_stmt($stmt);
+                sqlsrv_close($conn);
+
 			?>
 
         </div> 

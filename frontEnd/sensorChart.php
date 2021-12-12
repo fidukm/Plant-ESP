@@ -17,7 +17,7 @@
 		google.charts.setOnLoadCallback(drawChart);
 
 		<?php 
-			echo "sensorID = " . $_GET["sensor_id"] . ";\nsensorName = \"" .$_GET["sensor"] . "\";";
+			echo "sensorID = " . $_POST["sensor_id"] . ";\nsensorName = \"" .$_POST["sensor"] . "\";";
 		?>
 
 		function drawChart() {
