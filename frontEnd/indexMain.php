@@ -37,7 +37,7 @@
 				    # Loop through all results one row at a time
 				    while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
 				    {
-					    echo "<a href='indexSensor.html?esp=".$_GET["esp"]."&sensor=".$result["sensor_id"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
+					    echo "<a href='sensorChart.php?esp=".$_GET["esp"]."&sensor_id=".$result["sensor_id"]."&sensor=".$result["sensor_type"]."'><button class='sensorButton'>".$result["sensor_type"]."</button></a>";
 
 				    }
 			
@@ -46,7 +46,7 @@
                 }
                 else
                 {
-                    header("Location: /indexESP.php");
+                    header("Location: ./indexESP.php");
                 }
 			?>
 
