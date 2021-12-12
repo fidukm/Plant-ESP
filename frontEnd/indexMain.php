@@ -14,6 +14,7 @@
         <div class="outerBox" id="obox">
 
             <?php
+                # Checks to make sure the ESP device is selected, if not, use default value.
                 if (isset($_POST["esp"]))
                 {
                     $esp = $_POST["esp"];
@@ -38,8 +39,9 @@
                 }
         
                 /* Set up and execute the query. */
-                $sql = "SELECT * FROM sensor WHERE esp_id = '".$esp."';";
-                $stmt = sqlsrv_query($conn, $sql);
+                $sql = "SELECT * FROM sensor WHERE esp_id = ?;";
+                $params = array("$esp");
+                $stmt = sqlsrv_query($conn, $sql, $params);
 
                 # Loop through all results one row at a time
                 while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 

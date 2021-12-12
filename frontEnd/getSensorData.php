@@ -14,11 +14,13 @@
 	}
 
 	/* Set up and execute the query. */
+	$sensor_id = $_POST["sensor_id"];
 	$sql = "SELECT reading_time, avg_reading
 			FROM hourly_reading
-			WHERE reading_time >= DATEADD(DAY, -1, CURRENT_TIMESTAMP) AND reading_time < CURRENT_TIMESTAMP AND sensor_id = " . $_POST["sensor_id"] . 
-			"ORDER BY reading_time;";
-	$stmt = sqlsrv_query($conn, $sql);
+			WHERE reading_time >= DATEADD(DAY, -1, CURRENT_TIMESTAMP) AND reading_time < CURRENT_TIMESTAMP AND sensor_id = ? 
+			ORDER BY reading_time;";
+	$params = array("$sensor_id");
+	$stmt = sqlsrv_query($conn, $sql, $params);
 
 	$table_data = array();
 
