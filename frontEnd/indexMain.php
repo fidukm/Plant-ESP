@@ -47,8 +47,8 @@
                 while ($result = sqlsrv_fetch_array($stmt, SQLSRV_FETCH_ASSOC)) 
                 {
                     echo "<form action='sensorChart.php' method='post'>
-                            <button type='submit' class='sensorButton' name='sensor_id' value=".$result["sensor_id"].">"
-                                .$result["sensor_type"].
+ 			    <button type='submit' class='sensorButton' name='sensor_id' style='height:40px;' value=".$result["sensor_id"].">"
+                                .ucwords($result["sensor_type"]).
                             "</button>
                             <input type='hidden' name='esp' value=".$esp.">
                             <input type='hidden' name='sensor' value=".$result["sensor_type"].">
