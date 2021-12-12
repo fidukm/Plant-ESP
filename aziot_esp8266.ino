@@ -295,20 +295,33 @@ void setup()
 
 static char* getTelemetryPayload()
 {
+
   az_span temp_span = az_span_create(telemetry_payload, sizeof(telemetry_payload));
   temp_span = az_span_copy(temp_span, AZ_SPAN_FROM_STR("{ \"deviceId\": \"" IOT_CONFIG_DEVICE_ID "\", \"msgCount\": "));
   (void)az_span_u32toa(temp_span, telemetry_send_count++, &temp_span);  
-  
+
+  //get datetime in ISO8601 format
+    temp_span = az_span_copy(temp_span, AZ_SPAN_FROM_STR(", \"readingTime\": \""));
+    time_t now = time(NULL);
+    char isoTime[sizeof "2011-10-08T07:07:09Z"];
+    strftime(isoTime, sizeof isoTime, "%Y-%m-%dT%H:%M:%SZ", gmtime(&now));
+    //const char* timestr = isoTime;
+    temp_span = az_span_copy(temp_span, az_span_create_from_str(isoTime));
+    temp_span = az_span_copy(temp_span, AZ_SPAN_FROM_STR("\""));
+    
   // Write humidity
   double humidity = (double)dht.readHumidity();
+  //Serial.print("humidity: ");
+  //Serial.println(humidity);
   if (!isnan(humidity)) {
     temp_span = az_span_copy(temp_span, AZ_SPAN_FROM_STR(", \"humidity\": "));
     (void)az_span_dtoa(temp_span, humidity , 2, &temp_span);  
   }
 
-
 // Write temp
   double temperature = (double)dht.readTemperature(true);
+ // Serial.print("temperature: ");
+ // Serial.println(temperature);
   if (!isnan(temperature)) {
     temp_span = az_span_copy(temp_span, AZ_SPAN_FROM_STR(", \"temperature\": "));
     (void)az_span_dtoa(temp_span, temperature , 2 , &temp_span);
